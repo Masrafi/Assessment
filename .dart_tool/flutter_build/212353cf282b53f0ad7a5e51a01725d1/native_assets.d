@@ -1,0 +1,1 @@
+ /Users/mdkhorshedalam/Downloads/atbjobsapp/.dart_tool/flutter_build/212353cf282b53f0ad7a5e51a01725d1/native_assets.yaml: 

@@ -3,7 +3,7 @@ import 'package:atbjobsapp/config/theme/colors.dart';
 import 'package:atbjobsapp/core/extensions/extensions.dart';
 import 'package:atbjobsapp/core/utils/appbar_widget.dart';
 import 'package:atbjobsapp/core/utils/app_button.dart';
-import 'package:atbjobsapp/di.dart';
+import 'package:atbjobsapp/injection_container.dart';
 import 'package:atbjobsapp/feature/order/presentation/bloc/carb_bloc.dart';
 import 'package:atbjobsapp/feature/order/presentation/bloc/carb_event.dart';
 import 'package:atbjobsapp/feature/order/presentation/bloc/carb_state.dart';
@@ -18,7 +18,6 @@ import 'package:atbjobsapp/feature/order/presentation/bloc/post_state.dart';
 import 'package:atbjobsapp/feature/order/presentation/widgets/product_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../bloc/food_state.dart';
 
 class Order extends StatefulWidget {
@@ -37,6 +36,7 @@ class _OrderState extends State<Order> {
   int selectedExpense = 0;
   bool isButtonEnable = true;
   final Map<String, dynamic> data = {"items": []};
+  final List<dynamic> listData = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -58,7 +58,7 @@ class _OrderState extends State<Order> {
       body: BlocConsumer<PostBloc, PostState>(
         listener: (context, state) {
           if(state is PostLoaded){
-            Navigator.pushNamed(context, '/orderSummary');
+            Navigator.pushNamed(context, '/orderSummary', arguments: listData);
           }
           if(state is PostError){}
         }, 
@@ -103,12 +103,12 @@ class _OrderState extends State<Order> {
                                     if (existingIndex != -1) {
                                       items[existingIndex]["quantity"] += 1;
                                       items[existingIndex]["total_price"] += 12;
+                                      listData[existingIndex]["quantity"] += 1;
+                                      listData[existingIndex]["total_price"] += 12;
+                                      listData[existingIndex]["cal"] += food.calories;
                                     } else {
-                                      items.add({
-                                        "name": food.foodName,
-                                        "quantity": 1,
-                                        "total_price": 12,
-                                      });
+                                      listData.add({"image": food.imageUrl, "name": food.foodName,"quantity": 1,"total_price": 12, "cal": food.calories});
+                                      items.add({"name": food.foodName,"quantity": 1,"total_price": 12});
                                     }
                                     vegetableCounts[index]++;
                                     selectedCalories += food.calories;
@@ -126,8 +126,12 @@ class _OrderState extends State<Order> {
                                       if (existingIndex != -1) {
                                         items[existingIndex]["quantity"] -= 1;
                                         items[existingIndex]["total_price"] -= 12;
+                                        listData[existingIndex]["quantity"] -= 1;
+                                        listData[existingIndex]["total_price"] -= 12;
+                                        listData[existingIndex]["cal"] -= food.calories;
                                         if (items[existingIndex]["quantity"] == 0) {
                                           items.removeAt(existingIndex);
+                                          listData.removeAt(existingIndex);
                                         }
                                       }
                                       selectedCalories -= food.calories;
@@ -173,12 +177,12 @@ class _OrderState extends State<Order> {
                                     if (existingIndex != -1) {
                                       items[existingIndex]["quantity"] += 1;
                                       items[existingIndex]["total_price"] += 12;
+                                      listData[existingIndex]["quantity"] += 1;
+                                      listData[existingIndex]["total_price"] += 12;
+                                      listData[existingIndex]["cal"] += food.calories;
                                     } else {
-                                      items.add({
-                                        "name": food.foodName,
-                                        "quantity": 1,
-                                        "total_price": 12,
-                                      });
+                                      listData.add({"image": food.imageUrl, "name": food.foodName,"quantity": 1,"total_price": 12, "cal": food.calories});
+                                      items.add({"name": food.foodName,"quantity": 1,"total_price": 12});
                                     }
                                     meatCounts[index]++;
                                     selectedCalories += food.calories;
@@ -196,7 +200,11 @@ class _OrderState extends State<Order> {
                                       if (existingIndex != -1) {
                                         items[existingIndex]["quantity"] -= 1;
                                         items[existingIndex]["total_price"] -= 12;
+                                        listData[existingIndex]["quantity"] -= 1;
+                                        listData[existingIndex]["total_price"] -= 12;
+                                        listData[existingIndex]["cal"] -= food.calories;
                                         if (items[existingIndex]["quantity"] == 0) {
+                                          listData.removeAt(existingIndex);
                                           items.removeAt(existingIndex);
                                         }
                                       }
@@ -243,12 +251,12 @@ class _OrderState extends State<Order> {
                                     if (existingIndex != -1) {
                                       items[existingIndex]["quantity"] += 1;
                                       items[existingIndex]["total_price"] += 12;
+                                      listData[existingIndex]["quantity"] += 1;
+                                      listData[existingIndex]["total_price"] += 12;
+                                      listData[existingIndex]["cal"] += food.calories;
                                     } else {
-                                      items.add({
-                                        "name": food.foodName,
-                                        "quantity": 1,
-                                        "total_price": 12,
-                                      });
+                                      listData.add({"image": food.imageUrl, "name": food.foodName,"quantity": 1,"total_price": 12, "cal": food.calories});
+                                      items.add({"name": food.foodName,"quantity": 1,"total_price": 12});
                                     }
                                     carbCounts[index]++;
                                     selectedCalories += food.calories;
@@ -266,7 +274,11 @@ class _OrderState extends State<Order> {
                                       if (existingIndex != -1) {
                                         items[existingIndex]["quantity"] -= 1;
                                         items[existingIndex]["total_price"] -= 12;
+                                        listData[existingIndex]["quantity"] -= 1;
+                                        listData[existingIndex]["total_price"] -= 12;
+                                        listData[existingIndex]["cal"] -= food.calories;
                                         if (items[existingIndex]["quantity"] == 0) {
+                                          listData.removeAt(existingIndex);
                                           items.removeAt(existingIndex);
                                         }
                                       }

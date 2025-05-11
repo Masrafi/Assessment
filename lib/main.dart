@@ -5,8 +5,7 @@ import 'package:atbjobsapp/feature/summary/screen/login.dart';
 import 'package:atbjobsapp/feature/welcome/screen/signup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'di.dart';
+import 'injection_container.dart';
 
 void main() async{
   
@@ -39,9 +38,8 @@ class MyApp extends StatelessWidget {
           final calories = settings.arguments as double; // any type
           return MaterialPageRoute(builder: (_) => Order(calories: calories));
         case '/orderSummary':
-          return MaterialPageRoute(
-            builder: (_) => OrderSummary(),
-          );
+          final data = settings.arguments as List<dynamic>;
+          return MaterialPageRoute(builder: (_) => OrderSummary(data:  data));
         default:
           return null;
       }

@@ -6,6 +6,4 @@ class AppBoxDecoration {
     borderSide: const BorderSide(color: borderColor, width: 1),
     borderRadius: BorderRadius.circular(8),
   );
-
-
 }

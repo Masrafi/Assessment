@@ -17,9 +17,7 @@ class AppTextStyle {
         fontWeight: FontWeight.w400,
         color: hintTextColor,
       );
-
-
-
+  
   static TextStyle textFieldOptionStyle() =>
       const TextStyle(
         fontSize: 14,

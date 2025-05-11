@@ -59,7 +59,7 @@ class _DetailsState extends State<Details> {
               CustomStyledTextField(
                 controller: weightController,
                 label: 'Enter your weight',
-                suffixText: 'cm',
+                suffixText: 'Kg',
                 onChanged: (val) {
                   setState(() {
                   if(gender != null && heightController.text.isNotEmpty && weightController.text.isNotEmpty && ageController.text.isNotEmpty){
@@ -78,7 +78,7 @@ class _DetailsState extends State<Details> {
               CustomStyledTextField(
                 controller: heightController,
                 label: 'Enter your height',
-                suffixText: 'cm',
+                suffixText: 'Cm',
                 onChanged: (val) {
                   setState(() {
                   if(gender != null && heightController.text.isNotEmpty && weightController.text.isNotEmpty && ageController.text.isNotEmpty){
